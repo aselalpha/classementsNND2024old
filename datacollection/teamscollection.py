@@ -16,7 +16,7 @@ def get_size_of_teams(teams_dataframe: pd.DataFrame) -> int:
 
 
 
-def collect_teams(teams_file_path: str) -> list[Team]:
+def collect_teams(teams_file_path: str, num_journee: int) -> list[Team]:
     """
     Récupère les équipes à partir du fichier EXCEL spécifié.
     
@@ -33,6 +33,7 @@ def collect_teams(teams_file_path: str) -> list[Team]:
         team_concs = [(str(row[f'conc_{i}_nom']), str(row[f'conc_{i}_prenom'])) for i in range(1, team_size+1)]
 
         teams_list.append(Team(
+            num_journee,
             int(row['puce']),
             int(row['dossard']),
             bool(row['ent']),

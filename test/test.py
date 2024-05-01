@@ -15,7 +15,7 @@ class TestTeamsCollection(unittest.TestCase):
     
     def test_collect_teams(self):
         teams_excel_path: str = 'JOURNEES/J1/teams.xlsx'
-        teams_list: list[Team] = collect_teams(teams_excel_path)
+        teams_list: list[Team] = collect_teams(teams_excel_path, 1)
 
         self.assertEqual(len(teams_list), 142)
-        self.assertEqual(teams_list[2], Team(1915532, 3, False, 'mixte', 'Les pâ€™tits dangereux', [('Han', 'Vanessa'), ('Fagard', 'LÃ©o')], 'vanessa.han@student-cs.fr'))
+        self.assertEqual(teams_list[2], Team(1, 1915532, 3, False, 'mixte', 'Les pâ€™tits dangereux', [('Han', 'Vanessa'), ('Fagard', 'LÃ©o')], 'vanessa.han@student-cs.fr'))

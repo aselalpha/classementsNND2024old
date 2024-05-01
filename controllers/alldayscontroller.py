@@ -21,7 +21,9 @@ class AllDaysController:
 
         odc_list: list[OneDayController] = []
 
-        for folder in os.listdir(journees_folder_path):            
-            odc_list.append(OneDayController(journees_folder_path+folder+'/'))
+        for folder in os.listdir(journees_folder_path):
+            # Récupération du numéro de la journée correspondant
+            num_journee: int = int(folder[1:])
+            odc_list.append(OneDayController(journees_folder_path+folder+'/', num_journee))
         
         return odc_list
