@@ -16,14 +16,14 @@ def get_size_of_teams(teams_dataframe: pd.DataFrame) -> int:
 
 
 
-def collect_teams(teams_file_path: str, num_journee: int) -> list[Team]:
+def collect_teams(teams_excel_path: str, num_journee: int) -> list[Team]:
     """
     Récupère les équipes à partir du fichier EXCEL spécifié.
     
     Retourne une liste d'objets `Team`.
     """
 
-    teams_df: pd.DataFrame = pd.read_excel(teams_file_path).dropna(how='all')
+    teams_df: pd.DataFrame = pd.read_excel(teams_excel_path).dropna(how='all')
 
     team_size: int = get_size_of_teams(teams_df)
     teams_list: list[Team] = []
