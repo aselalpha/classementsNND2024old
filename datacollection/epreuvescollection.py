@@ -1,10 +1,12 @@
+import logging
 import pandas as pd
 
 from models.epreuves import EpreuveActi, EpreuveCourse
 
 
 def collect_epreuves(epreuves_excel_path: str, num_journee: int) -> list[EpreuveCourse|EpreuveActi]:
-
+    logging.info(f"Collecte des épreuves via {epreuves_excel_path}...")
+    
     epreuves_df = pd.read_excel(epreuves_excel_path).dropna(how='all')
     epreuves_list: list[EpreuveCourse|EpreuveActi] = []
 
@@ -14,7 +16,8 @@ def collect_epreuves(epreuves_excel_path: str, num_journee: int) -> list[Epreuve
             epreuves_list.append(new_epreuve)
         else:
             append_mg_to_epreuve_course(row, epreuves_list)
-            
+    
+    logging.info(f"{len(epreuves_excel_path)} épreuves collectées ({len(get_epreuves_selon_type(epreuves_list, EpreuveCourse))} courses, {len(get_epreuves_selon_type(epreuves_list, EpreuveActi))} actis)")
     return epreuves_list
 
 
@@ -58,6 +61,11 @@ def append_mg_to_epreuve_course(row: pd.Series, epreuves_list: list[EpreuveCours
             return
     
     raise MeilleurGrimpeurNotAffectableError(mg_epreuve_name)
+
+
+def get_epreuves_selon_type(epreuves_list: list[EpreuveActi|EpreuveCourse], epreuve_class: EpreuveActi|EpreuveCourse) -> list[EpreuveCourse|EpreuveActi]:
+    """Retourne la liste des épreuves de type Course ou Acti."""
+    return [epreuve for epreuve in epreuves_list if isinstance(epreuve, epreuve_class)]
 
 
 class MeilleurGrimpeurNotAffectableError(Exception):
