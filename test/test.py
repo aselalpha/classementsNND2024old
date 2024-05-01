@@ -4,10 +4,12 @@ import pandas as pd
 from datacollection.teamscollection import get_size_of_teams, collect_teams
 from datacollection.doigtscollection import clean_doigts_df, collect_doigts
 from datacollection.epreuvescollection import collect_epreuves, append_mg_to_epreuve_course, create_epreuve_object, MeilleurGrimpeurNotAffectableError
+from datacollection.badgeusescollection import collect_badgeuses
 
 from models.team import Team
 from models.doigt import Doigt
 from models.epreuves import EpreuveActi, EpreuveCourse
+from models.poincon import Poincon
 
 
 class TestTeamsCollection(unittest.TestCase):
@@ -71,3 +73,18 @@ class TestEpreuvesCollection(unittest.TestCase):
     def test_MeilleurGrimpeurNotAffectableError(self):
         with self.assertRaises(MeilleurGrimpeurNotAffectableError):
             collect_epreuves('test/test_files/epreuves_mg_fail.xlsx', 1)
+
+
+class TestBadgeusesCollection(unittest.TestCase):
+
+    def test_collect_badgeuses(self):
+        poincons_list: list[Poincon] = collect_badgeuses("JOURNEES/J1/badgeuses.xlsx", 1)
+        self.assertEqual(len(poincons_list), 38)
+
+        poincon_9: Poincon = poincons_list[9]
+        self.assertEqual(poincon_9.journee, 1)
+        self.assertEqual(poincon_9.epreuve_name, "Obli 2 VTT")
+        self.assertEqual(poincon_9.signaleur, "S8")
+        self.assertEqual(poincon_9.badgeuse_num, 8)
+        self.assertEqual(poincon_9.fonction, "mg_debut")
+        self.assertEqual(poincon_9.bonus_points, 0)

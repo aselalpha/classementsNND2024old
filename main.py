@@ -30,7 +30,7 @@ def main():
         one_day_controller.compute_running_times()
         one_day_controller.rank(convert_time_to_points=CLASSEMENT_PAR_POINTS)
     
-    all_days_controller.rank()    
+    all_days_controller.rank()
 
 
 

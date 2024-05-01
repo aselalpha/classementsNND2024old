@@ -3,7 +3,7 @@ import json
 from models.team import Team
 from models.doigt import Doigt
 from models.epreuves import EpreuveCourse, EpreuveActi
-from models.badgeuse import Badgeuse
+from models.poincon import Badgeuse
 
 from datacollection.teamscollection import collect_teams
 from datacollection.doigtscollection import collect_doigts
@@ -32,4 +32,4 @@ class OneDayController:
         self.teams_list: list[Team] = collect_teams(data['teams_excel'], self.numero_journee)
         self.doigts_list: list[Doigt] = collect_doigts(data['doigts_csv'], self.numero_journee)
         self.epreuves_list: list[EpreuveActi|EpreuveCourse] = collect_epreuves(data['epreuves_excel'], self.numero_journee)
-        self.badgeuses_list: list[Badgeuse] = collect_badgeuses(data['badgeuses_excel'])
+        self.badgeuses_list: list[Badgeuse] = collect_badgeuses(data['badgeuses_excel'], self.numero_journee)
